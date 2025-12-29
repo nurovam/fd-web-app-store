@@ -46,11 +46,6 @@ docker-compose up --build
 > docker-compose build backend
 > ```
 
-> Если `npm install` висит из‑за недоступного registry, передайте зеркало:
-> ```bash
-> NPM_REGISTRY=https://registry.npmmirror.com docker-compose build frontend
-> ```
-
 ## Основные возможности API
 
 - Регистрация: `POST /api/auth/register/`
