@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import CategoryGrid from "./components/CategoryGrid";
 import FeatureStrip from "./components/FeatureStrip";
 import Header from "./components/Header";
@@ -12,6 +12,8 @@ function App() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [status, setStatus] = useState<string>("");
+  const catalogRef = useRef<HTMLDivElement | null>(null);
+  const productsRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     fetchCategories().then(setCategories);
@@ -32,13 +34,28 @@ function App() {
     setTimeout(() => setStatus(""), 2500);
   };
 
+  const handleScrollToCatalog = () => {
+    catalogRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const handleScrollToProducts = () => {
+    productsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const handleLoginClick = () => {
+    setStatus("Авторизация откроется в отдельной форме. Пока можно пользоваться гостевым просмотром каталога.");
+    setTimeout(() => setStatus(""), 3500);
+  };
+
   return (
     <div className="page">
-      <Header />
+      <Header onLogin={handleLoginClick} onOpenCatalog={handleScrollToCatalog} onOpenSales={handleScrollToProducts} />
       <div style={{ display: "grid", gap: 20, marginTop: 18 }}>
-        <Hero />
-        <CategoryGrid categories={categories} />
-        <section className="card" style={{ padding: 20 }}>
+        <Hero onViewCatalog={handleScrollToCatalog} />
+        <div ref={catalogRef}>
+          <CategoryGrid categories={categories} onOpenCatalog={handleScrollToProducts} />
+        </div>
+        <section className="card" style={{ padding: 20 }} ref={productsRef}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
             <div>
               <h2 className="section-title">Популярные товары</h2>

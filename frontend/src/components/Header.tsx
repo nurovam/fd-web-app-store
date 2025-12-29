@@ -2,9 +2,11 @@ import type { FC } from "react";
 
 type HeaderProps = {
   onLogin?: () => void;
+  onOpenCatalog?: () => void;
+  onOpenSales?: () => void;
 };
 
-const Header: FC<HeaderProps> = ({ onLogin }) => {
+const Header: FC<HeaderProps> = ({ onLogin, onOpenCatalog, onOpenSales }) => {
   return (
     <header
       className="card"
@@ -39,9 +41,15 @@ const Header: FC<HeaderProps> = ({ onLogin }) => {
         </div>
       </div>
       <nav style={{ display: "flex", gap: 14, color: "#3c4d65", fontWeight: 600 }}>
-        <a href="#">Каталог</a>
-        <a href="#">Акции</a>
-        <a href="#">О компании</a>
+        <button onClick={onOpenCatalog} className="button" style={{ padding: "8px 12px", boxShadow: "none" }}>
+          Каталог
+        </button>
+        <button onClick={onOpenSales} className="button" style={{ padding: "8px 12px", boxShadow: "none" }}>
+          Акции
+        </button>
+        <a href="#" style={{ padding: "8px 12px" }}>
+          О компании
+        </a>
       </nav>
       <div style={{ flex: 1, display: "flex", justifyContent: "center" }}>
         <div

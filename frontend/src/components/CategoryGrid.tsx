@@ -3,11 +3,12 @@ import type { Category } from "../types";
 
 type Props = {
   categories: Category[];
+  onOpenCatalog?: () => void;
 };
 
 const icons = ["🧰", "🦷", "📦", "💉", "🛠️", "⚙️", "💊", "🧪"];
 
-const CategoryGrid: FC<Props> = ({ categories }) => {
+const CategoryGrid: FC<Props> = ({ categories, onOpenCatalog }) => {
   return (
     <section className="card" style={{ padding: 20 }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
@@ -15,7 +16,7 @@ const CategoryGrid: FC<Props> = ({ categories }) => {
           <h2 className="section-title">Каталог</h2>
           <p className="section-subtitle">Категории по направлениям клиник и кабинетов</p>
         </div>
-        <button className="button" style={{ paddingInline: 16 }}>
+        <button className="button" style={{ paddingInline: 16 }} onClick={onOpenCatalog}>
           В каталог
         </button>
       </div>
