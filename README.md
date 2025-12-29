@@ -39,6 +39,18 @@ docker-compose up --build
 
 По умолчанию используется SQLite (`./db.sqlite3`). Остановите контейнеры и сохраните файл, чтобы не потерять данные.
 
+> Если сборка контейнера backend упирается в таймауты/прокси при установке `pip`, передайте зеркало PyPI:
+> ```bash
+> PIP_INDEX_URL=https://mirrors.aliyun.com/pypi/simple \
+> PIP_TRUSTED_HOST=mirrors.aliyun.com \
+> docker-compose build backend
+> ```
+
+> Если `npm install` висит из‑за недоступного registry, передайте зеркало:
+> ```bash
+> NPM_REGISTRY=https://registry.npmmirror.com docker-compose build frontend
+> ```
+
 ## Основные возможности API
 
 - Регистрация: `POST /api/auth/register/`
