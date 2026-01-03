@@ -1,0 +1,49 @@
+version: '3.9'
+
+services:
+  backend:
+    build:
+      context: ./backend
+    env_file:
+      - ./backend/.env.example
+      - ./backend/.env
+    volumes:
+      - media_data:/app/media
+    expose:
+      - "8000"
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: dentistry
+      POSTGRES_USER: dentistry
+      POSTGRES_PASSWORD: dentistry
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  web:
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
+    volumes:
+      - media_data:/media
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+
+  bot:
+    build:
+      context: ./backend
+    command: python manage.py order_bot
+    env_file:
+      - ./backend/.env.example
+      - ./backend/.env
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
+  media_data:
